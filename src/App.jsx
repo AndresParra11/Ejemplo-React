@@ -1,21 +1,31 @@
 import Componente1 from "./components/Componente1/Componente1";
-import PropTypes from "prop-types";
+import Button from "./components/Button/Button";
+import Hello from "./components/Hello/Hello";
+import Display from "./components/Display/Display";
 
-const Hello = (props) => {
-  const bornYear = () => new Date().getFullYear() - props.age;
-  return (
-    <div>
-      <p>
-        Hola {props.name}, tienes {props.age} años.
-      </p>
-      <p>Así que naciste en {bornYear()}.</p>
-    </div>
-  );
-};
+import { useState } from "react";
 
 const App = () => {
   const name = "Felipe";
   const age = 25;
+  const [counter, setCounter] = useState(0);
+
+  console.log("rendering...", counter);
+
+  const increaseByOne = () => {
+    console.log("increasing, value before", counter);
+    setCounter(counter + 1);
+  };
+
+  const setToZero = () => {
+    console.log("reseting, value before", counter);
+    setCounter(0);
+  };
+
+  const decrementByOne = () => {
+    console.log("decreasing, value before", counter);
+    setCounter(counter - 1);
+  };
 
   return (
     <>
@@ -23,13 +33,17 @@ const App = () => {
       <Hello name="Andrés" age={28} />
       <Hello name={name} age={age} />
       <Componente1 />
+      <Display contador={counter} />
+      {/*       <button onClick={increaseByOne}>Incrementar</button>
+      <button onClick={decrementByOne}>Decrementar</button>
+      <button onClick={setToZero}>Resetear</button> */}
+
+      <Button onClick={increaseByOne} text="Incrementar" />
+      <Button onClick={decrementByOne} text="Decrementar" />
+      <Button onClick={setToZero} text="Resetear" />
+      <Display contador={counter} />
     </>
   );
-};
-
-Hello.propTypes = {
-  name: PropTypes.string,
-  age: PropTypes.number,
 };
 
 export default App;
